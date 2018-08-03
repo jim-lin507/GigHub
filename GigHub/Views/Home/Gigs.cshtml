@@ -1,0 +1,66 @@
+﻿@model IEnumerable<GigHub.Models.Gig>
+@{
+    ViewBag.Title = "Gigs";
+}
+<h2>Upcoming Gigs</h2>
+@using (Html.BeginForm("Search", "Gigs",FormMethod.Post, new {id="searchForm" }))
+{
+    <div class="form-group">
+        <div id="searchGigs" class="input-group">
+            @Html.TextBox("searchItem",Request.QueryString["query"], new { @class = "form-control",placeholder="Search by artist, genre..." })
+            <span class="input-group-addon">
+                <a href="javascript:document.getElementById('searchForm').submit()"><i class="glyphicon glyphicon-search"></i></a>
+            </span>
+        </div>
+       
+
+    </div>
+}
+<ul class="gigs">
+    @foreach (var gig in Model)
+    {
+        <li>
+            <div class="date">
+                <div class="month">
+                    @gig.DateTime.ToString("MMMM")
+                </div>
+                <div class="day">
+                    @gig.DateTime.ToString("d ")
+                </div>
+            </div>
+
+            <div class="details">
+                <span class="artist">
+                    @gig.Artist.UserName
+                </span>
+                <span class="genre">
+                    @gig.Genre.Name
+                </span>
+                @if (Request.IsAuthenticated)
+                {
+                    <button data-gig-id="@gig.Id" class="btn btn-default pull-right js-toggle-attendance">Going?</button>
+                }
+            </div>
+        </li>
+        }
+</ul>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".js-toggle-attendance").click(function () {
+                var button = $(this);
+                $.post("/api/Attendance/attend", { gigId: button.attr("data-gig-id")} )
+                    .done(function () {
+                        button
+                            .removeClass("btn-default")
+                            .addClass("btn-info")
+                            .text("Going");
+                    })
+                    .fail(function () {
+                        alert("Something failed");
+                    });
+            });
+        });
+    </script>
+}
