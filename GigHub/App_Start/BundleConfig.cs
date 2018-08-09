@@ -9,12 +9,13 @@ namespace GigHub
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
-                        "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/moment.js",
-                        "~/Scripts/bootstrap.js",
-                        "~/Scripts/bootbox.min.js",
-                        "~/Scripts/respond.js"
-                        ));
+                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/jquery.min.js",
+                 "~/Scripts/bootstrap.min.js",
+                "~/Scripts/moment.js",
+                "~/Scripts/bootbox.min.js",
+                "~/Scripts/respond.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -26,6 +27,7 @@ namespace GigHub
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap.min.css",
                       "~/Content/animate.css",
                       "~/Content/site.css"));
         }

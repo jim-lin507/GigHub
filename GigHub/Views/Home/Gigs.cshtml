@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<GigHub.Models.Gig>
 @{
     ViewBag.Title = "Gigs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>Upcoming Gigs</h2>
 @using (Html.BeginForm("Search", "Gigs",FormMethod.Post, new {id="searchForm" }))
@@ -33,6 +34,7 @@
                 <span class="artist">
                     @gig.Artist.UserName
                 </span>
+                
                 <span class="genre">
                     @gig.Genre.Name
                 </span>
@@ -48,17 +50,35 @@
 {
     <script>
         $(document).ready(function () {
+
+            $.getJSON("/api/Attendance/GetAttendingGigs", function (attendingGigs) {
+                $.each(attendingGigs, function (key, attendingGig) {
+
+                    $(".js-toggle-attendance").each(function () {
+
+                        var gigId = $(this).attr("data-gig-id");
+
+                        if (gigId == attendingGig.id) {
+                            $(this).removeClass("btn-default")
+                                .addClass("btn-info")
+                                .text("Going");
+                        }
+                    });
+                        
+                });
+            });
+
             $(".js-toggle-attendance").click(function () {
                 var button = $(this);
                 $.post("/api/Attendance/attend", { gigId: button.attr("data-gig-id")} )
                     .done(function () {
                         button
-                            .removeClass("btn-default")
+                            .removeClass("btn-default   ")
                             .addClass("btn-info")
                             .text("Going");
                     })
                     .fail(function () {
-                        alert("Something failed");
+                        console.log("Something failed");
                     });
             });
         });

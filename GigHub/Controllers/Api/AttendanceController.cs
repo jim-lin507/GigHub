@@ -22,6 +22,16 @@ namespace GigHub.Controllers.Api
             public int Gigid { get; set; }
         }
 
+        public IEnumerable<Gig> GetAttendingGigs()
+        {
+            var userId = User.Identity.GetUserId();
+            var attendingGigs=_context.Attendances
+                .Where(a => a.AttendeeId == userId)
+                .Select(g=>g.Gig)
+                .ToList();
+            return attendingGigs;
+        }
+
         [HttpPost]
         public IHttpActionResult Attend(AttendanceDto attend)
         {
