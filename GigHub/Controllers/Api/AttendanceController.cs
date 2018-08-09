@@ -1,4 +1,5 @@
-﻿using GigHub.Models;
+﻿using GigHub.Dtos;
+using GigHub.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,8 @@ namespace GigHub.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
-        public class AttendanceDto
-        {
-            public int Gigid { get; set; }
-        }
-
+        [HttpGet]
+        [Authorize]
         public IEnumerable<Gig> GetAttendingGigs()
         {
             var userId = User.Identity.GetUserId();
@@ -33,6 +31,7 @@ namespace GigHub.Controllers.Api
         }
 
         [HttpPost]
+        [Authorize]
         public IHttpActionResult Attend(AttendanceDto attend)
         {
             var userId = User.Identity.GetUserId();

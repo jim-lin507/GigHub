@@ -39,6 +39,17 @@ namespace GigHub.Controllers
         }
 
         [Authorize]
+        public ActionResult Following()
+        {
+            var userId = User.Identity.GetUserId();
+            var userNames = _context.Followings
+                .Where(f=>f.FollowerId==userId)
+                .Select(u=>u.Followee.UserName)
+                .ToList();
+            return View(userNames);
+        }
+
+        [Authorize]
         public ActionResult Mine()
         {
             var userId = User.Identity.GetUserId();

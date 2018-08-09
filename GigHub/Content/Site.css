@@ -137,6 +137,8 @@ span.field-validation-error {
 {
     font-size:15px;
 }
+
+
 .gigs>li .actions
 {
     font-size:15px;
@@ -146,9 +148,13 @@ span.field-validation-error {
 {
     display:block;
 }
-#searchGigs
+.followee .artist-name
 {
-    width:300px;
+    font-weight:bold;
+    font-size:20px;
+}
+#searchGigs {
+    width: 300px;
 }
 .popover-notification 
 {

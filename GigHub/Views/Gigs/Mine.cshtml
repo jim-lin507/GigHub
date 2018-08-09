@@ -7,36 +7,45 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 
 <h2>My Upcoming Gigs</h2>
 <ul class="gigs">
-    @foreach (var gig in Model)
+    @if (Model.Count() == 0)
     {
-        <li>
-            <div class="date">
-                <div class="month">
-                    @gig.DateTime.ToString("MMM", DateTimeFormatInfo.InvariantInfo)
-                </div>
-                <div class="day">
-                    @gig.DateTime.ToString("d ")
-                </div>
-            </div>
-
-            <div class="details">
-                <span class="venue">
-                    @gig.Venue
-                </span>
-                <span class="genre">
-                    @gig.Genre.Name
-                </span>
-                <div class="actions">
-                    <a href="@Url.Action("Edit","Gigs", new { id=gig.Id})">
-                        Edit
-                    </a>
-                    <a href="#" class="js-cancel-gig" data-gig-id="@gig.Id">
-                        Cancel
-                    </a>
-                </div>
-            </div>
-        </li>
+        <li>There is no my upcoming gigs.</li>
     }
+    else
+    {
+        foreach (var gig in Model)
+        {
+            <li>
+                <div class="date">
+                    <div class="month">
+                        @gig.DateTime.ToString("MMM", DateTimeFormatInfo.InvariantInfo)
+                    </div>
+                    <div class="day">
+                        @gig.DateTime.ToString("d ")
+                    </div>
+                </div>
+
+                <div class="details">
+                    <span class="venue">
+                        @gig.Venue
+                    </span>
+                    <span class="genre">
+                        @gig.Genre.Name
+                    </span>
+                    <div class="actions">
+                        <a href="@Url.Action("Edit","Gigs", new { id=gig.Id})">
+                            Edit
+                        </a>
+                        <a href="#" class="js-cancel-gig" data-gig-id="@gig.Id">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </li>
+        }
+    }
+
+
 </ul>
 @section scripts
 {

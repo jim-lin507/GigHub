@@ -15,8 +15,9 @@
         <li class="dropdown">
             <a style="cursor:pointer;" class="dropdown-toggle" data-toggle="dropdown" role="button" >@User.Identity.GetUserName()<span class="caret"></span></a>
             <ul class="dropdown-menu">
+                <li><a href="@Url.Action("Following","Gigs")">Artist I am Following</a></li>
+                <li style="border-bottom:1px solid #333"><a href="@Url.Action("Attending","Gigs")">Gigs I am Attending</a></li>
                 <li><a href="@Url.Action("Mine","Gigs")">My Upcoming Gigs</a></li>
-                <li><a href="@Url.Action("Attending","Gigs")">Gigs I am Attending</a></li>
                 <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
             </ul>
            @* @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@

@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<GigHub.Models.Gig>
 @using System.Globalization
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Gigs";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,35 +19,47 @@
 
     </div>
 }
-<ul class="gigs">
-    @foreach (var gig in Model)
-    {
-        <li>
-            <div class="date">
-                <div class="month">
-                    @gig.DateTime.ToString("MMM", DateTimeFormatInfo.InvariantInfo)
-                </div>
-                <div class="day">
-                    @gig.DateTime.ToString("d ")
-                </div>
-            </div>
+    <ul class="gigs">
+        @if (Model.Count() == 0)
+        {
+            <li>There is no gigs.</li>
+        }
+        else
+        {
+            foreach (var gig in Model)
+            {
+                <li>
+                    <div class="date">
+                        <div class="month">
+                            @gig.DateTime.ToString("MMM", DateTimeFormatInfo.InvariantInfo)
+                        </div>
+                        <div class="day">
+                            @gig.DateTime.ToString("d ")
+                        </div>
+                    </div>
 
-            <div class="details">
-                <span class="artist">
-                    @gig.Artist.UserName
-                </span>
+                    <div class="details">
+                        <span class="artist">
+                            @gig.Artist.UserName
+                            @if (Request.IsAuthenticated && gig.ArtistId != User.Identity.GetUserId())
+                            {
+                                <button data-following-id="@gig.ArtistId" class="btn btn-link btn-sm  btn-following js-toggle-following">Follow</button>
+                            }
+                        </span>
 
-                <span class="genre">
-                    @gig.Genre.Name
-                </span>
-                @if (Request.IsAuthenticated)
-                {
-                    <button data-gig-id="@gig.Id" class="btn btn-default pull-right js-toggle-attendance">Going?</button>
-                }
-            </div>
-        </li>
-    }
-</ul>
+                        <span class="genre">
+                            @gig.Genre.Name
+                        </span>
+                        @if (Request.IsAuthenticated && gig.ArtistId != User.Identity.GetUserId())
+                        {
+                            <button data-gig-id="@gig.Id" class="btn btn-default btn-sm pull-right btn-attendance js-toggle-attendance">Going?</button>
+                        }
+                    </div>
+                </li>
+            }
+        }
+
+    </ul>
 @section scripts
 {
     <script>
@@ -74,13 +87,39 @@
                 $.post("/api/Attendance/attend", { gigId: button.attr("data-gig-id") })
                     .done(function () {
                         button
-                            .removeClass("btn-default   ")
+                            .removeClass("btn-default")
                             .addClass("btn-info")
                             .text("Going");
                     })
                     .fail(function () {
                         console.log("Something failed");
                     });
+            });
+
+            $(".js-toggle-following").click(function () {
+                var button = $(this);
+                $.post("/api/Following/follow", { followeeId: button.attr("data-following-id") })
+                    .done(function () {
+                        button.text("Following");
+                    })
+                    .fail(function () {
+                        console.log("Something failed");
+                    });
+            });
+
+            $.getJSON("/api/Following/GetFollowedArtist", function (followedArtists) {
+                $.each(followedArtists, function (key, followedArtist) {
+
+                    $(".js-toggle-following").each(function () {
+
+                        var followeeId = $(this).attr("data-following-id");
+
+                        if (followeeId == followedArtist.followeeId) {
+                            $(this).text("Following");
+                        }
+                    });
+
+                });
             });
         });
     </script>
