@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace GigHub.Controllers
 {
@@ -58,7 +59,7 @@ namespace GigHub.Controllers
                 Id = gig.Id,
                 Heading = "Edit a Gig",
                 Genres = _context.Genres.ToList(),
-                Date = gig.DateTime.ToString("d MMM yyy"),
+                Date = gig.DateTime.ToString("d MMM yyy",DateTimeFormatInfo.InvariantInfo),
                 Time = gig.DateTime.ToString("HH:mm"),
                 GenreId = gig.GenreId,
                 Venue = gig.Venue

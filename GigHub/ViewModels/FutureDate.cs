@@ -12,9 +12,10 @@ namespace GigHub.ViewModels
         public override bool IsValid(object value)
         {
             DateTime dateTime;
+            CultureInfo culture = CultureInfo.GetCultureInfo("en-us");
             var isValid = DateTime.TryParseExact(Convert.ToString(value),
                 "d MMM yyyy",
-                CultureInfo.InvariantCulture,
+                culture,
                 DateTimeStyles.None,
                 out dateTime);
             return (isValid&&(dateTime>DateTime.Now));

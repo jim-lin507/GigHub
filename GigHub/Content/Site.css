@@ -121,6 +121,13 @@ span.field-validation-error {
     font-weight:bold;
     display:block;
 }
+.gigs>li .details .status-cancel
+{
+    position:absolute;
+    top:15px;
+    left:70px;
+    font-size:15px;
+}
 .gigs>li .details .venue
 {
     font-weight:bold;

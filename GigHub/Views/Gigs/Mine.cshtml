@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<GigHub.Models.Gig>
+@using System.Globalization
 @{
     ViewBag.Title = "Mine";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>My Upcoming Gigs</h2>
@@ -11,7 +12,7 @@
         <li>
             <div class="date">
                 <div class="month">
-                    @gig.DateTime.ToString("MMMM")
+                    @gig.DateTime.ToString("MMM", DateTimeFormatInfo.InvariantInfo)
                 </div>
                 <div class="day">
                     @gig.DateTime.ToString("d ")

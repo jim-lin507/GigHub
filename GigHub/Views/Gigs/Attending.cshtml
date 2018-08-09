@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<GigHub.Models.Gig>
+@using System.Globalization
 @{
     ViewBag.Title = "Attending";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,7 +12,7 @@
         <li>
             <div class="date">
                 <div class="month">
-                    @gig.DateTime.ToString("MMMM")
+                    @gig.DateTime.ToString("MMM", DateTimeFormatInfo.InvariantInfo)
                 </div>
                 <div class="day">
                     @gig.DateTime.ToString("d ")
@@ -22,6 +23,10 @@
                 <span class="artist">
                     @gig.Artist.UserName
                 </span>
+                @if (gig.IsCanceled)
+                {
+                    <span class="label label-warning status-cancel">Canceled</span>
+                }
 
                 <span class="genre">
                     @gig.Genre.Name
