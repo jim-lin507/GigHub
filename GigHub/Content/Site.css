@@ -27,6 +27,22 @@ span.field-validation-error {
     font-weight: bold;
 }
 /*Bootstrap overide*/
+.popover
+{
+    box-shadow:none;
+    -webkit-box-shadow:none;
+}
+.popover-title
+{
+    background-color:white;
+}
+.popover-content {
+    padding: 0px;
+}
+.navbar
+{
+    border:none;
+}
 .navbar-inverse {
     background-color: red;
 }
@@ -36,15 +52,33 @@ span.field-validation-error {
 .navbar-inverse .navbar-brand {
     color: white;
 }
+.navbar-inverse .notifications
+{
+    position:relative;
+}
+.navbar-inverse .notifications .badge
+{
+    position:absolute;
+    top:6px;
+    right:0px;
+    background:#a80a0a;
+}
+.navbar-inverse .navbar-toggle {
+     border: none; 
+}
 .caret {
     display: inline-block;
 }
 .navbar-inverse .navbar-nav > .dropdown > a .caret {
     border-top-color: #fff;
 }
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+     border: none; 
+}
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
     background-color: red;
 }
+
     /* Page-level styles*/
     .gigs{
     list-style:none;
@@ -109,3 +143,25 @@ span.field-validation-error {
 {
     width:300px;
 }
+.popover-notification 
+{
+    list-style: none;
+    padding-left: 0px;
+}
+.popover-notification .highlight
+{
+    font-weight:bold;
+}
+.popover-notification>li
+{
+    border-bottom:1px solid #ddd;
+    background-color:#f7f7f7;
+    padding:10px;
+    cursor:pointer;
+}
+.popover-notification>li:last-child
+{
+    border-bottom:none;
+}
+
+
